@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take My Money"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:layout_marginTop="30dp"
+        />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Se connecter"
+        android:layout_below="@+id/appTitle"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        android:layout_marginTop="30dp"
+        android:onClick="toLogin"
+        />
+    <Button
+        android:id="@+id/subscribeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="S'inscrire"
+        android:layout_below="@+id/loginButton"
+        android:background="@color/colorAccent"
+        android:textColor="#FFF"
+        android:layout_marginTop="5dp"
+        android:onClick="toSubscribe"
+        />
+
+
+</RelativeLayout>
