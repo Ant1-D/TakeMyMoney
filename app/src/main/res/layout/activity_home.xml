@@ -23,8 +23,8 @@
         android:background="@color/colorPrimary"
         android:textColor="#FFF"
         android:layout_marginTop="30dp"
-        android:onClick="toLogin"
         />
+
     <Button
         android:id="@+id/subscribeButton"
         android:layout_width="match_parent"
@@ -34,7 +34,6 @@
         android:background="@color/colorAccent"
         android:textColor="#FFF"
         android:layout_marginTop="5dp"
-        android:onClick="toSubscribe"
         />
 
 

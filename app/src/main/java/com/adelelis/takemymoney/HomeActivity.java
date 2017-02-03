@@ -1,25 +1,39 @@
 package com.adelelis.takemymoney;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
+
+    Button loginBtn, subscribeBtn;
+    Activity act = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-    }
 
-    public void toLogin(View v){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
+        loginBtn = (Button) findViewById(R.id.loginButton);
+        subscribeBtn = (Button) findViewById(R.id.subscribeButton);
 
-    public void toSubscribe(View v){
-        Intent intent = new Intent(this, SubscribeActivity.class);
-        startActivity(intent);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(act, LoginActivity.class);
+                startActivity(sendIntent);
+            }
+        });
+
+        subscribeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(act, SubscribeActivity.class);
+                startActivity(sendIntent);
+            }
+        });
     }
 }
