@@ -17,10 +17,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static android.app.DownloadManager.STATUS_RUNNING;
-import static android.app.DownloadManager.STATUS_SUCCESSFUL;
 import static android.content.ContentValues.TAG;
-import static android.drm.DrmInfoStatus.STATUS_ERROR;
 
 
 public class ConnectionService extends IntentService {
@@ -42,8 +39,13 @@ public class ConnectionService extends IntentService {
         URL url = null;
         JSONObject object = null;
         InputStream inStream = null;
+        final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+        Bundle bundle = new Bundle();
 
         try {
+            /* Service Started */
+            receiver.send(STATUS_RUNNING, Bundle.EMPTY);
+
             // Create the Request API URL
             url = new URL(connectUrl);
 
@@ -61,14 +63,6 @@ public class ConnectionService extends IntentService {
             }
             object = (JSONObject) new JSONTokener(response).nextValue();
 
-            Log.d("BUNDLE Return :", object.toString());
-
-            final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-            Bundle bundle = new Bundle();
-
-            /* Service Started */
-            receiver.send(STATUS_RUNNING, Bundle.EMPTY);
-
             /* Status Finished */
             bundle.putString("result", object.toString());
             receiver.send(STATUS_FINISHED, bundle);
@@ -76,8 +70,6 @@ public class ConnectionService extends IntentService {
             /* Sending error message back to activity */
             bundle.putString(Intent.EXTRA_TEXT, "Error message here..");
             receiver.send(STATUS_ERROR, bundle);
-
-
 
         } catch (Exception e) {
             Log.e("Exception", e.toString());

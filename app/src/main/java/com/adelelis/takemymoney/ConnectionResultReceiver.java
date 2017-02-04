@@ -1,8 +1,8 @@
 package com.adelelis.takemymoney;
 
 import android.os.Bundle;
-        import android.os.Handler;
-        import android.os.ResultReceiver;
+import android.os.Handler;
+import android.os.ResultReceiver;
 
 public class ConnectionResultReceiver extends ResultReceiver {
     private Receiver mReceiver;

@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 public class HomeActivity extends AppCompatActivity {
 
     Button loginBtn, subscribeBtn;
@@ -23,8 +26,16 @@ public class HomeActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendIntent = new Intent(act, LoginActivity.class);
-                startActivity(sendIntent);
+                String FILENAME = "user_infos";
+                File file = getBaseContext().getFileStreamPath(FILENAME);
+
+                if(file.exists()) {
+                    Intent sendIntent = new Intent(act, ShoppingActivity.class);
+                    startActivity(sendIntent);
+                } else {
+                    Intent sendIntent = new Intent(act, LoginActivity.class);
+                    startActivity(sendIntent);
+                }
             }
         });
 

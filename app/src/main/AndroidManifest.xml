@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.adelelis.takemymoney">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -29,9 +30,9 @@
 
         <service
             android:name=".ConnectionService"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
 
+        <activity android:name=".ShoppingActivity"></activity>
     </application>
 
 </manifest>

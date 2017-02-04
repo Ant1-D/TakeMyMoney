@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/activityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inscription"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:layout_marginBottom="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/label_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prénom *"
+        android:layout_below="@+id/activityTitle"/>
+
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_firstname"
+        android:inputType="text"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/label_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nom"
+        android:layout_below="@+id/firstname"/>
+
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_lastname"
+        android:inputType="text"
+        android:layout_marginBottom="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/label_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email *"
+        android:layout_below="@+id/lastname"/>
+
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_login"
+        android:inputType="text"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/label_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mot de passe *"
+        android:layout_below="@+id/login"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/subscribeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="S'inscrire"
+        android:layout_below="@+id/password"
+        android:background="@color/colorAccent"
+        android:textColor="#FFF"
+        />
+
+    <TextView
+        android:id="@+id/requireFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="* Champs obligatoires"
+        android:layout_below="@+id/subscribeButton"/>
+
+</RelativeLayout>
