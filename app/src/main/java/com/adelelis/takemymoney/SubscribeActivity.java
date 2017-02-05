@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,11 +18,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class SubscribeActivity extends AppCompatActivity implements ConnectionResultReceiver.Receiver {
+public class SubscribeActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
 
     Button subscribeButton;
     TextView firstname, lastname, login, password;
-    ConnectionResultReceiver mReceiver;
+    RequestAPIResultReceiver mReceiver;
     Activity act = this;
     String url;
 
@@ -58,12 +57,12 @@ public class SubscribeActivity extends AppCompatActivity implements ConnectionRe
         });
     }
 
-    public void subscribe(String connectUrl){
-        mReceiver = new ConnectionResultReceiver(new Handler());
+    public void subscribe(String requestUrl){
+        mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
-        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, ConnectionService.class);
+        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
 
-        intent.putExtra("connectUrl", connectUrl);
+        intent.putExtra("requestUrl", requestUrl);
         intent.putExtra("receiver", mReceiver);
         startService(intent);
     }
@@ -72,10 +71,10 @@ public class SubscribeActivity extends AppCompatActivity implements ConnectionRe
     public void onReceiveResult(int resultCode, Bundle resultData) {
 
         switch (resultCode) {
-            case ConnectionService.STATUS_RUNNING:
+            case RequestAPIService.STATUS_RUNNING:
 
                 break;
-            case ConnectionService.STATUS_FINISHED:
+            case RequestAPIService.STATUS_FINISHED:
 
                 String results = resultData.getString("result");
 
@@ -93,7 +92,7 @@ public class SubscribeActivity extends AppCompatActivity implements ConnectionRe
                                 fos.write(resultArray.toString().getBytes());
                                 fos.close();
 
-                                Intent sendIntent = new Intent(act, ShoppingActivity.class);
+                                Intent sendIntent = new Intent(act, AccountActivity.class);
                                 startActivity(sendIntent);
 
                             } catch (JSONException e) {
@@ -119,11 +118,6 @@ public class SubscribeActivity extends AppCompatActivity implements ConnectionRe
                     e.printStackTrace();
                 }
 
-                break;
-            case ConnectionService.STATUS_ERROR:
-                /* Handle the error */
-                String error = resultData.getString(Intent.EXTRA_TEXT);
-                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 break;
         }
 

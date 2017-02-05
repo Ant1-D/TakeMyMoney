@@ -6,34 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-public class LoginActivity extends AppCompatActivity implements ConnectionResultReceiver.Receiver {
+public class LoginActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
 
     TextView login, password;
     Button loginBtn;
     String url;
-    ConnectionResultReceiver mReceiver;
+    RequestAPIResultReceiver mReceiver;
     Activity act = this;
 
     @Override
@@ -56,12 +46,12 @@ public class LoginActivity extends AppCompatActivity implements ConnectionResult
     }
 
 
-    public void connection(String connectUrl){
-        mReceiver = new ConnectionResultReceiver(new Handler());
+    public void connection(String requestUrl){
+        mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
-        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, ConnectionService.class);
+        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
 
-        intent.putExtra("connectUrl", connectUrl);
+        intent.putExtra("requestUrl", requestUrl);
         intent.putExtra("receiver", mReceiver);
         startService(intent);
     }
@@ -70,10 +60,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectionResult
     public void onReceiveResult(int resultCode, Bundle resultData) {
 
         switch (resultCode) {
-            case ConnectionService.STATUS_RUNNING:
+            case RequestAPIService.STATUS_RUNNING:
 
                 break;
-            case ConnectionService.STATUS_FINISHED:
+            case RequestAPIService.STATUS_FINISHED:
 
                 String results = resultData.getString("result");
 
@@ -91,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectionResult
                                 fos.write(resultArray.toString().getBytes());
                                 fos.close();
 
-                                Intent sendIntent = new Intent(act, ShoppingActivity.class);
+                                Intent sendIntent = new Intent(act, AccountActivity.class);
                                 startActivity(sendIntent);
 
                             } catch (JSONException e) {
@@ -113,11 +103,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectionResult
                     e.printStackTrace();
                 }
 
-                break;
-            case ConnectionService.STATUS_ERROR:
-                /* Handle the error */
-                String error = resultData.getString(Intent.EXTRA_TEXT);
-                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 break;
         }
     }

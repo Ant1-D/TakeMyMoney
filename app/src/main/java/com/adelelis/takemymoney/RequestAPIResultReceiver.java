@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 
-public class ConnectionResultReceiver extends ResultReceiver {
+public class RequestAPIResultReceiver extends ResultReceiver {
     private Receiver mReceiver;
 
-    public ConnectionResultReceiver(Handler handler) {
+    public RequestAPIResultReceiver(Handler handler) {
         super(handler);
     }
 

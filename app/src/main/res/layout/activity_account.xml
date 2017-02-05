@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profil"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        />
+
+    <TextView
+        android:id="@+id/label_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prénom : "
+        android:layout_below="@+id/appTitle"/>
+
+    <TextView
+        android:id="@+id/label_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nom : "
+        android:layout_below="@+id/label_firstname"/>
+
+    <TextView
+        android:id="@+id/label_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email : "
+        android:layout_below="@+id/label_lastname"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/shoppingsLists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mes listes de courses"
+        android:background="@color/colorAccent"
+        android:textColor="#FFF"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BBB"
+        android:textColor="#FFF"
+        android:text="Déconnexion"/>
+
+</LinearLayout>

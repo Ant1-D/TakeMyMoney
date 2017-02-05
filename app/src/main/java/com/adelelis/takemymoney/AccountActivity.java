@@ -1,11 +1,9 @@
 package com.adelelis.takemymoney;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,34 +18,48 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static com.adelelis.takemymoney.R.id.login;
+public class AccountActivity extends AppCompatActivity {
 
-public class ShoppingActivity extends AppCompatActivity {
-
-    TextView firstname;
-    Button disconnectButton;
+    TextView firstname, lastname, email;
+    Button shoppingsListsButton, disconnectButton;
     Activity act = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopping);
+        setContentView(R.layout.activity_account);
 
         JSONObject userInfos = getUserInfos();
 
-        firstname = (TextView) findViewById(R.id.nom);
+        firstname = (TextView) findViewById(R.id.label_firstname);
+        lastname = (TextView) findViewById(R.id.label_lastname);
+        email = (TextView) findViewById(R.id.label_email);
+
         disconnectButton = (Button) findViewById(R.id.disconnect);
+        shoppingsListsButton = (Button) findViewById(R.id.shoppingsLists);
 
         try {
-            firstname.setText("Bonjour " + userInfos.getString("firstname"));
+            firstname.setText("Prénom : " + userInfos.getString("firstname"));
+            lastname.setText("Nom : " + userInfos.getString("lastname"));
+            email.setText("Email : " + userInfos.getString("email"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
 
         disconnectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 disconnect();
+            }
+        });
+
+        shoppingsListsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent sendIntent = new Intent(act, ShoppingListActivity.class);
+            startActivity(sendIntent);
             }
         });
 
@@ -67,9 +79,8 @@ public class ShoppingActivity extends AppCompatActivity {
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
             }
-            JSONObject object = (JSONObject) new JSONTokener(sb.toString()).nextValue();
+            return (JSONObject) new JSONTokener(sb.toString()).nextValue();
 
-            return object;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

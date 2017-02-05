@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
                 File file = getBaseContext().getFileStreamPath(FILENAME);
 
                 if(file.exists()) {
-                    Intent sendIntent = new Intent(act, ShoppingActivity.class);
+                    Intent sendIntent = new Intent(act, AccountActivity.class);
                     startActivity(sendIntent);
                 } else {
                     Intent sendIntent = new Intent(act, LoginActivity.class);

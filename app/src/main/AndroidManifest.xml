@@ -29,10 +29,12 @@
         </activity>
 
         <service
-            android:name=".ConnectionService"
-            android:exported="false"></service>
+            android:name=".RequestAPIService"
+            android:exported="false" />
 
-        <activity android:name=".ShoppingActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".ShoppingListActivity" />
+        <activity android:name=".ShoppingListDetailActivity"></activity>
     </application>
 
 </manifest>

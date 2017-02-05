@@ -20,19 +20,18 @@ import java.net.URL;
 import static android.content.ContentValues.TAG;
 
 
-public class ConnectionService extends IntentService {
+public class RequestAPIService extends IntentService {
 
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
-    public static final int STATUS_ERROR = 2;
 
-    public ConnectionService() {
-        super("ConnectionService");
+    public RequestAPIService() {
+        super("RequestAPIService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String connectUrl = intent.getStringExtra("connectUrl");
+        String requestUrl = intent.getStringExtra("requestUrl");
 
         String temp, response = "";
         HttpURLConnection urlConnection = null;
@@ -47,9 +46,9 @@ public class ConnectionService extends IntentService {
             receiver.send(STATUS_RUNNING, Bundle.EMPTY);
 
             // Create the Request API URL
-            url = new URL(connectUrl);
+            url = new URL(requestUrl);
 
-            // New Url connection with the GET method
+            // New Url requestApi with the GET method
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(true);
@@ -66,10 +65,6 @@ public class ConnectionService extends IntentService {
             /* Status Finished */
             bundle.putString("result", object.toString());
             receiver.send(STATUS_FINISHED, bundle);
-
-            /* Sending error message back to activity */
-            bundle.putString(Intent.EXTRA_TEXT, "Error message here..");
-            receiver.send(STATUS_ERROR, bundle);
 
         } catch (Exception e) {
             Log.e("Exception", e.toString());
