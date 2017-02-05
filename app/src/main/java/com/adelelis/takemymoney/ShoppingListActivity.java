@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -44,7 +45,6 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
             token = userInfos.getString("token");
             url = "http://appspaces.fr/esgi/shopping_list/shopping_list/list.php?token="+token;
             requestType = "list";
-            Log.d("url : ", url);
 
             requestApi(url);
 
@@ -114,19 +114,20 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
                     switch (code){
                         case 0:
                             if (Objects.equals(requestType, "list")){
-                                HashMap<String, String> list = new HashMap<>();
+                                ArrayList<ShoppingList> list = new ArrayList<>();
 
                                 if(jObject.getJSONArray("result") != null && jObject.getJSONArray("result").length() > 0){
                                     JSONArray resultArray = jObject.getJSONArray("result");
 
                                     for (int i = 0; i < resultArray.length() ; i++){
                                         JSONObject shoppingList = resultArray.getJSONObject(i);
-                                        list.put(shoppingList.getString("id"), shoppingList.getString("name"));
+                                        ShoppingList sL = new ShoppingList(shoppingList.getString("id"), shoppingList.getString("name"), null);
+                                        list.add(sL);
                                     }
 
                                 }else{
-                                    list.put("0", "item1");
-                                    list.put("1", "item2");
+                                    ShoppingList sL = new ShoppingList("1", "Courses", null);
+                                    list.add(sL);
                                 }
 
                                 //instantiate custom adapter
@@ -140,6 +141,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
 
                                 Intent sendIntent = new Intent(act, ShoppingListDetailActivity.class);
                                 sendIntent.putExtra("idSL", resultArray.getString("id"));
+                                sendIntent.putExtra("nameSL", resultArray.getString("name"));
 
                                 startActivity(sendIntent);
                             }
@@ -151,11 +153,11 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
                             break;
                     }
 
-        } catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                break;
+            break;
         }
     }
 
@@ -184,6 +186,6 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
             }
         });
 
-
     }
+
 }

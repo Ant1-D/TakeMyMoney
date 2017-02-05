@@ -2,7 +2,7 @@ package com.adelelis.takemymoney;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +16,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<ShoppingList> list = new ArrayList<>();
+public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
+    private ArrayList<Product> list = new ArrayList<>();
     private Context context;
-    private int pos;
+    Product editProduct, deletedProduct;
     DataTransferInterface dtInterface;
 
-
-
-    public ShoppingListCustomAdapter(ArrayList<ShoppingList> list, Context context) {
+    public ProductCustomAdapter(ArrayList<Product> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -47,7 +45,6 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        pos = position;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.edit_list_item, null);
@@ -55,7 +52,9 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.listItemString);
+        TextView listItemSubtext = (TextView)view.findViewById(R.id.listItemSubstring);
         listItemText.setText(list.get(position).getName());
+        listItemSubtext.setText(list.get(position).getQuantity() + " à " + list.get(position).getPrice() + " €");
 
         //Handle buttons and add onClickListeners
         Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
@@ -65,23 +64,55 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
             @Override
             public void onClick(View v) {
                 // Open the dialog to confirm deletion
-                deleteShoppingListDialog();
+                deletedProduct = list.get(position);
+                deleteProductDialog();
             }
         });
         editBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent sendIntent = new Intent(context, ShoppingListDetailActivity.class);
-                sendIntent.putExtra("idSL", list.get(position).getId());
-                sendIntent.putExtra("nameSL", list.get(position).getName());
-                context.startActivity(sendIntent);
+                editProduct = list.get(position);
+                editProductDialog();
             }
         });
 
         return view;
     }
 
-    private void deleteShoppingListDialog()
+    private void editProductDialog()
+    {
+        final Dialog myDialog;
+
+        final EditText productName, productQuantity, productPrice;
+
+        myDialog = new Dialog(context);
+        myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        myDialog.setContentView(R.layout.add_product);
+        myDialog.setCancelable(true);
+        Button edit = (Button) myDialog.findViewById(R.id.createProductButton);
+        productName = (EditText) myDialog.findViewById(R.id.productName);
+        productQuantity = (EditText) myDialog.findViewById(R.id.productQuantity);
+        productPrice = (EditText) myDialog.findViewById(R.id.productPrice);
+
+        productName.setText(editProduct.getName());
+        productQuantity.setText(String.valueOf(editProduct.getQuantity()));
+        productPrice.setText(String.valueOf(editProduct.getPrice()));
+
+        myDialog.show();
+
+        edit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // TODO: Request edit product in API
+            }
+        });
+
+    }
+
+
+    private void deleteProductDialog()
     {
         final Dialog myDialog;
 
@@ -99,12 +130,10 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
             @Override
             public void onClick(View v)
             {
-                list.remove(pos);
+                list.remove(deletedProduct);
                 notifyDataSetChanged();
                 myDialog.cancel();
-
-                //TODO: ENVOYER LA SUPPRESSION A L'API
-
+                // TODO: Request delete product in API
             }
         });
 
