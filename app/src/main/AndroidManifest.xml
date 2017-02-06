@@ -34,7 +34,7 @@
 
         <activity android:name=".AccountActivity" />
         <activity android:name=".ShoppingListActivity" />
-        <activity android:name=".ShoppingListDetailActivity"></activity>
+        <activity android:name=".ShoppingListDetailActivity" />
     </application>
 
 </manifest>

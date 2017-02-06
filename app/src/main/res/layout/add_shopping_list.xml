@@ -7,17 +7,18 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/label_slname"
+        android:id="@+id/labelSlName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nom de la shopping list :"
+        android:text="@string/shopping_list_name"
+        android:labelFor="@+id/slName"
         />
 
     <EditText
-        android:id="@+id/slname"
+        android:id="@+id/slName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_slname"
+        android:layout_below="@+id/labelSlName"
         android:inputType="text"
         android:layout_marginBottom="10dp"/>
 
@@ -25,10 +26,10 @@
         android:id="@+id/createSLButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
-        android:layout_below="@+id/slname"
+        android:text="@string/add"
+        android:layout_below="@+id/slName"
         android:background="@color/colorAccent"
-        android:textColor="#FFF"
+        android:textColor="@color/textColorClear"
         />
 
 </RelativeLayout>

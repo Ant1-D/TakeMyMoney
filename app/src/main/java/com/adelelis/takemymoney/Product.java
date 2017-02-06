@@ -1,6 +1,6 @@
 package com.adelelis.takemymoney;
 
-public class Product {
+class Product {
     private String id;
     private String name;
     private double price;

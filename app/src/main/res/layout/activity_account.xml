@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,51 +10,55 @@
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profil"
-        android:textSize="30dp"
+        android:text="@string/profil"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/textColorDark"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         />
 
     <TextView
-        android:id="@+id/label_firstname"
+        android:id="@+id/labelFirstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prénom : "
-        android:layout_below="@+id/appTitle"/>
+        android:text="@string/firstname"
+        android:layout_below="@+id/appTitle"
+        />
 
     <TextView
-        android:id="@+id/label_lastname"
+        android:id="@+id/labelLastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nom : "
-        android:layout_below="@+id/label_firstname"/>
+        android:text="@string/lastname"
+        android:layout_below="@+id/labelFirstname"/>
 
     <TextView
-        android:id="@+id/label_email"
+        android:id="@+id/labelEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email : "
-        android:layout_below="@+id/label_lastname"
+        android:text="@string/email"
+        android:layout_below="@+id/labelLastname"
         android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/shoppingsLists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mes listes de courses"
+        android:text="@string/myShoppingLists"
         android:background="@color/colorAccent"
-        android:textColor="#FFF"
-        android:layout_marginBottom="10dp"/>
+        android:textColor="@color/textColorClear"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/labelEmail"
+        />
 
     <Button
         android:id="@+id/disconnect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#BBB"
-        android:textColor="#FFF"
-        android:text="Déconnexion"/>
+        android:background="@color/colorClear"
+        android:textColor="@color/textColorClear"
+        android:text="@string/disconnect"
+        android:layout_below="@+id/shoppingsLists"/>
 
-</LinearLayout>
+</RelativeLayout>

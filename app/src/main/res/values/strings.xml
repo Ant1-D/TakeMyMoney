@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">TakeMyMoney</string>
+
+
+    <!-- Account -->
+    <string name="connection">Connexion</string>
+    <string name="profil">Profil</string>
+    <string name="firstname">Prénom : </string>
+    <string name="firstname_argument">Prénom : %1$s</string>
+    <string name="lastname">Nom : </string>
+    <string name="lastname_argument">Prénom : %1$s</string>
+    <string name="email">Email : </string>
+    <string name="email_argument">Prénom : %1$s</string>
+    <string name="password">Mot de passe : </string>
+    <string name="myShoppingLists">Mes listes de courses</string>
+    <string name="connecting">Se connecter</string>
+    <string name="disconnect">Déconnexion</string>
+
+    <!-- Editable -->
+    <string name="add">Ajouter</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
+
+    <!-- Subscribe -->
+    <string name="subscribe">Inscription</string>
+    <string name="firstname_require">Prénom *</string>
+    <string name="email_require">Email *</string>
+    <string name="password_require">Mot de passe *</string>
+    <string name="subscribing">S\'inscrire</string>
+    <string name="required_fields">* Champs obligatoires</string>
+
+    <!-- ShoppingList -->
+    <string name="my_list">Mes listes</string>
+    <string name="add_list">Ajouter une liste</string>
+
+    <!-- Product -->
+    <string name="add_product">Ajouter un produit</string>
+    <string name="product_name">Nom du produit :</string>
+    <string name="product_quantity">Quantité du produit :</string>
+    <string name="product_price">Prix du produit :</string>
+
+    <!-- Dialog -->
+    <string name="shopping_list_name">Nom de la shopping list :</string>
+    <string name="confirmation_text">Êtes vous sûr ?</string>
+
 </resources>

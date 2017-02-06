@@ -15,15 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapter {
+class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<ShoppingList> list = new ArrayList<>();
     private Context context;
-    private int pos;
-    ShoppingListTransferInterface sLInterface;
+    private ShoppingList deletedSL;
+    private ShoppingListTransferInterface sLInterface;
 
-
-
-    public ShoppingListCustomAdapter(ArrayList<ShoppingList> list, Context context, ShoppingListTransferInterface sLInterface) {
+    ShoppingListCustomAdapter(ArrayList<ShoppingList> list, Context context, ShoppingListTransferInterface sLInterface) {
         this.list = list;
         this.context = context;
         this.sLInterface = sLInterface;
@@ -47,7 +45,6 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        pos = position;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.edit_list_item, null);
@@ -58,13 +55,14 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
         listItemText.setText(list.get(position).getName());
 
         //Handle buttons and add onClickListeners
-        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button editBtn = (Button)view.findViewById(R.id.edit_btn);
+        Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
+        Button editBtn = (Button)view.findViewById(R.id.editBtn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 // Open the dialog to confirm deletion
+                deletedSL = list.get(position);
                 deleteShoppingListDialog();
             }
         });
@@ -99,12 +97,11 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
             @Override
             public void onClick(View v)
             {
-                list.remove(pos);
-                notifyDataSetChanged();
+
+                sLInterface.setValues(deletedSL, "remove");
+                list.remove(deletedSL);
                 myDialog.cancel();
-
-                //TODO: ENVOYER LA SUPPRESSION A L'API
-
+                notifyDataSetChanged();
             }
         });
 

@@ -2,7 +2,6 @@ package com.adelelis.takemymoney;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
@@ -17,8 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-
-import static android.content.ContentValues.TAG;
 
 
 public class RequestAPIService extends IntentService {
@@ -36,8 +33,8 @@ public class RequestAPIService extends IntentService {
 
         String temp, response = "";
         HttpURLConnection urlConnection = null;
-        URL url = null;
-        JSONObject object = null;
+        URL url;
+        JSONObject object;
         InputStream inStream = null;
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
         Bundle bundle = new Bundle();

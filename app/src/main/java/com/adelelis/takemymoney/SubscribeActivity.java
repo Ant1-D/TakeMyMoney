@@ -14,17 +14,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class SubscribeActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
 
-    Button subscribeButton;
-    TextView firstname, lastname, login, password;
-    RequestAPIResultReceiver mReceiver;
-    Activity act = this;
-    String url;
+    private Button subscribeButton;
+    private TextView firstname, lastname, login, password;
+    private RequestAPIResultReceiver mReceiver;
+    private Activity act = this;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class SubscribeActivity extends AppCompatActivity implements RequestAPIRe
         });
     }
 
-    public void subscribe(String requestUrl){
+    void subscribe(String requestUrl){
         mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
@@ -95,11 +94,7 @@ public class SubscribeActivity extends AppCompatActivity implements RequestAPIRe
                                 Intent sendIntent = new Intent(act, AccountActivity.class);
                                 startActivity(sendIntent);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
+                            } catch (IOException | JSONException e) {
                                 e.printStackTrace();
                             }
 

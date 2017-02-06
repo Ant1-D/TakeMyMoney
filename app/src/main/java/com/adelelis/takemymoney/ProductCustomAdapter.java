@@ -15,13 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
+class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<Product> list = new ArrayList<>();
     private Context context;
-    Product editProduct, deletedProduct;
-    ProductTransferInterface dtInterface;
+    private Product editProduct, deletedProduct;
+    private ProductTransferInterface dtInterface;
 
-    public ProductCustomAdapter(ArrayList<Product> list, Context context, ProductTransferInterface dtInterface) {
+    ProductCustomAdapter(ArrayList<Product> list, Context context, ProductTransferInterface dtInterface) {
         this.list = list;
         this.context = context;
         this.dtInterface = dtInterface;
@@ -57,8 +57,8 @@ public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
         listItemSubtext.setText(list.get(position).getQuantity() + " à " + list.get(position).getPrice() + " €");
 
         //Handle buttons and add onClickListeners
-        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-        Button editBtn = (Button)view.findViewById(R.id.edit_btn);
+        Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
+        Button editBtn = (Button)view.findViewById(R.id.editBtn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,7 +95,7 @@ public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
         productQuantity = (EditText) myDialog.findViewById(R.id.productQuantity);
         productPrice = (EditText) myDialog.findViewById(R.id.productPrice);
 
-        edit.setText("Modifier");
+        edit.setText(R.string.edit);
         productName.setText(editProduct.getName());
         productQuantity.setText(String.valueOf(editProduct.getQuantity()));
         productPrice.setText(String.valueOf(editProduct.getPrice()));
@@ -112,13 +112,12 @@ public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
                 editProduct.setPrice(Double.parseDouble(productPrice.getText().toString()));
 
                 dtInterface.setValues(editProduct, "edit");
-
-                // TODO: Request edit product in API
+                notifyDataSetChanged();
+                myDialog.cancel();
             }
         });
 
     }
-
 
     private void deleteProductDialog()
     {
@@ -139,10 +138,9 @@ public class ProductCustomAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v)
             {
                 list.remove(deletedProduct);
+                dtInterface.setValues(deletedProduct, "remove");
                 notifyDataSetChanged();
                 myDialog.cancel();
-                dtInterface.setValues(deletedProduct, "remove");
-                // TODO: Request delete product in API
             }
         });
 

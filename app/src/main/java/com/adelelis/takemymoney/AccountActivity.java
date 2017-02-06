@@ -20,9 +20,9 @@ import java.io.InputStreamReader;
 
 public class AccountActivity extends AppCompatActivity {
 
-    TextView firstname, lastname, email;
-    Button shoppingsListsButton, disconnectButton;
-    Activity act = this;
+    private TextView firstname, lastname, email;
+    private Button shoppingsListsButton, disconnectButton;
+    private Activity act = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +31,17 @@ public class AccountActivity extends AppCompatActivity {
 
         JSONObject userInfos = getUserInfos();
 
-        firstname = (TextView) findViewById(R.id.label_firstname);
-        lastname = (TextView) findViewById(R.id.label_lastname);
-        email = (TextView) findViewById(R.id.label_email);
+        firstname = (TextView) findViewById(R.id.labelFirstname);
+        lastname = (TextView) findViewById(R.id.labelLastname);
+        email = (TextView) findViewById(R.id.labelEmail);
 
         disconnectButton = (Button) findViewById(R.id.disconnect);
         shoppingsListsButton = (Button) findViewById(R.id.shoppingsLists);
 
         try {
-            firstname.setText("Prénom : " + userInfos.getString("firstname"));
-            lastname.setText("Nom : " + userInfos.getString("lastname"));
-            email.setText("Email : " + userInfos.getString("email"));
+            firstname.setText(getString(R.string.firstname_argument, userInfos.getString("firstname")));
+            lastname.setText(getString(R.string.lastname_argument, userInfos.getString("lastname")));
+            email.setText(getString(R.string.email_argument, userInfos.getString("email")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    public JSONObject getUserInfos(){
+    JSONObject getUserInfos(){
         try {
             FileInputStream fis = getApplicationContext().openFileInput("user_infos");
 
@@ -81,20 +81,20 @@ public class AccountActivity extends AppCompatActivity {
             }
             return (JSONObject) new JSONTokener(sb.toString()).nextValue();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void disconnect(){
+    void disconnect(){
         String FILENAME = "user_infos";
         File file = getBaseContext().getFileStreamPath(FILENAME);
-        file.delete();
+        boolean deleted = file.delete();
 
-        Intent sendIntent = new Intent(act, HomeActivity.class);
-        startActivity(sendIntent);
+        if(deleted) {
+            Intent sendIntent = new Intent(act, HomeActivity.class);
+            startActivity(sendIntent);
+        }
     }
 }

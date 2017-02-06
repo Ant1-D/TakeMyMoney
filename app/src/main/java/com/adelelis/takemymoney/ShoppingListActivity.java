@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,16 +23,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class ShoppingListActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver, ShoppingListTransferInterface {
 
-    String url, token;
-    RequestAPIResultReceiver mReceiver;
-    Activity act = this;
-    Button addSL;
-    String requestType;
+    private String url, token;
+    private RequestAPIResultReceiver mReceiver;
+    private Activity act = this;
+    private Button addSL;
+    private String requestType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
         });
     }
 
-    public void requestApi(String requestUrl){
+    private void requestApi(String requestUrl){
         mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
@@ -73,7 +71,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
         startService(intent);
     }
 
-    public JSONObject getUserInfos(){
+    private JSONObject getUserInfos(){
         try {
             FileInputStream fis = getApplicationContext().openFileInput("user_infos");
 
@@ -87,9 +85,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
             }
             return (JSONObject) new JSONTokener(sb.toString()).nextValue();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -119,13 +115,10 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
 
                                     for (int i = 0; i < resultArray.length() ; i++){
                                         JSONObject shoppingList = resultArray.getJSONObject(i);
-                                        ShoppingList sL = new ShoppingList(shoppingList.getString("id"), shoppingList.getString("name"), null);
+                                        ShoppingList sL = new ShoppingList(shoppingList.getString("id"), shoppingList.getString("name"));
                                         list.add(sL);
                                     }
 
-                                }else{
-                                    ShoppingList sL = new ShoppingList("1", "Courses", null);
-                                    list.add(sL);
                                 }
 
                                 //instantiate custom adapter
@@ -142,6 +135,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
                                 sendIntent.putExtra("nameSL", resultArray.getString("name"));
 
                                 startActivity(sendIntent);
+                                getShoppingListList();
                             }else if(Objects.equals(requestType, "remove")){
                                 getShoppingListList();
                             }
@@ -161,7 +155,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
         }
     }
 
-    public void getShoppingListList(){
+    private void getShoppingListList(){
         url = "http://appspaces.fr/esgi/shopping_list/shopping_list/list.php?token="+token;
         requestType = "list";
 
@@ -170,7 +164,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
 
     private void addShoppingListDialog()
     {
-        Dialog myDialog;
+        final Dialog myDialog;
         final EditText SLName;
 
         myDialog = new Dialog(this);
@@ -179,7 +173,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
         myDialog.setCancelable(true);
         Button create = (Button) myDialog.findViewById(R.id.createSLButton);
 
-        SLName = (EditText) myDialog.findViewById(R.id.slname);
+        SLName = (EditText) myDialog.findViewById(R.id.slName);
         myDialog.show();
 
         create.setOnClickListener(new View.OnClickListener()
@@ -187,9 +181,10 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
             @Override
             public void onClick(View v)
             {
-                requestType = "add";
-                url = "http://appspaces.fr/esgi/shopping_list/shopping_list/create.php?token="+token.toString()+"&name="+SLName.getText().toString();
-                requestApi(url);
+            requestType = "add";
+            url = "http://appspaces.fr/esgi/shopping_list/shopping_list/create.php?token="+token+"&name="+SLName.getText().toString();
+            requestApi(url);
+                myDialog.cancel();
             }
         });
 

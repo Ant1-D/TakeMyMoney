@@ -11,8 +11,8 @@ import java.io.File;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button loginBtn, subscribeBtn;
-    Activity act = this;
+    private Button loginBtn, subscribeBtn;
+    private Activity act = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

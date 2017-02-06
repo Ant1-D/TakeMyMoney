@@ -15,9 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/textColorDark"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         />
@@ -31,17 +31,17 @@
     </ListView>
 
     <RelativeLayout
+        android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottomLayout">
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/totalPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:textColor="#FFF"
+            android:textColor="@color/textColorClear"
             android:textStyle="bold"
             android:text=""
             android:padding="5dp"
@@ -52,9 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/totalPrice"
-            android:text="Ajouter un produit"
+            android:text="@string/add_product"
             android:background="@color/colorAccent"
-            android:textColor="#FFF" />
+            android:textColor="@color/textColorClear" />
     </RelativeLayout>
 
 </RelativeLayout>

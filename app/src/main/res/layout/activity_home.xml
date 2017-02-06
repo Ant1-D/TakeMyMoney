@@ -7,10 +7,10 @@
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take My Money"
-        android:textSize="30dp"
+        android:text="@string/app_name"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/textColorDark"
         android:layout_marginTop="30dp"
         />
 
@@ -18,10 +18,10 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Se connecter"
+        android:text="@string/connecting"
         android:layout_below="@+id/appTitle"
         android:background="@color/colorPrimary"
-        android:textColor="#FFF"
+        android:textColor="@color/textColorClear"
         android:layout_marginTop="30dp"
         />
 
@@ -29,10 +29,10 @@
         android:id="@+id/subscribeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="S'inscrire"
+        android:text="@string/subscribing"
         android:layout_below="@+id/loginButton"
         android:background="@color/colorAccent"
-        android:textColor="#FFF"
+        android:textColor="@color/textColorClear"
         android:layout_marginTop="5dp"
         />
 

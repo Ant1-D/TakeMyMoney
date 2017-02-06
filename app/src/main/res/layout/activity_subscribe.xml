@@ -10,75 +10,82 @@
         android:id="@+id/activityTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inscription"
-        android:textSize="30dp"
+        android:text="@string/subscribe"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/textColorDark"
         android:layout_marginBottom="10dp"
         />
 
-
     <TextView
-        android:id="@+id/label_firstname"
+        android:layout_below="@+id/activityTitle"
+        android:id="@+id/labelFirstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prénom *"
-        android:layout_below="@+id/activityTitle"/>
+        android:text="@string/firstname_require"
+        android:labelFor="@+id/firstname"
+        />
 
     <EditText
         android:id="@+id/firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_firstname"
+        android:layout_below="@+id/labelFirstname"
         android:inputType="text"
         android:layout_marginBottom="10dp"
         />
 
     <TextView
-        android:id="@+id/label_lastname"
+        android:id="@+id/labelLastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nom"
-        android:layout_below="@+id/firstname"/>
+        android:text="@string/lastname"
+        android:layout_below="@+id/firstname"
+        android:labelFor="@+id/lastname"
+        />
 
     <EditText
         android:id="@+id/lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_lastname"
+        android:layout_below="@+id/labelLastname"
         android:inputType="text"
         android:layout_marginBottom="10dp"
         />
 
 
     <TextView
-        android:id="@+id/label_login"
+        android:id="@+id/labelLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email *"
-        android:layout_below="@+id/lastname"/>
+        android:text="@string/email_require"
+        android:layout_below="@+id/lastname"
+        android:labelFor="@+id/login"
+        />
 
     <EditText
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_login"
+        android:layout_below="@+id/labelLogin"
         android:inputType="text"
         android:layout_marginBottom="10dp"
         />
 
     <TextView
-        android:id="@+id/label_password"
+        android:id="@+id/labelPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mot de passe *"
-        android:layout_below="@+id/login"/>
+        android:text="@string/password_require"
+        android:layout_below="@+id/login"
+        android:labelFor="@+id/password"
+        />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_password"
+        android:layout_below="@+id/labelPassword"
         android:inputType="textPassword"
         android:layout_marginBottom="10dp"/>
 
@@ -86,17 +93,17 @@
         android:id="@+id/subscribeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="S'inscrire"
+        android:text="@string/subscribing"
         android:layout_below="@+id/password"
         android:background="@color/colorAccent"
-        android:textColor="#FFF"
+        android:textColor="@color/textColorClear"
         />
 
     <TextView
         android:id="@+id/requireFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="* Champs obligatoires"
+        android:text="@string/required_fields"
         android:layout_below="@+id/subscribeButton"/>
 
 </RelativeLayout>

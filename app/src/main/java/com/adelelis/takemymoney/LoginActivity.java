@@ -14,17 +14,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
 
-    TextView login, password;
-    Button loginBtn;
-    String url;
-    RequestAPIResultReceiver mReceiver;
-    Activity act = this;
+    private TextView login, password;
+    private Button loginBtn;
+    private String url;
+    private RequestAPIResultReceiver mReceiver;
+    private Activity act = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements RequestAPIResult
     }
 
 
-    public void connection(String requestUrl){
+    private void connection(String requestUrl){
         mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
@@ -84,11 +83,7 @@ public class LoginActivity extends AppCompatActivity implements RequestAPIResult
                                 Intent sendIntent = new Intent(act, AccountActivity.class);
                                 startActivity(sendIntent);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
+                            } catch (IOException | JSONException e) {
                                 e.printStackTrace();
                             }
 

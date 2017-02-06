@@ -7,16 +7,16 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/label_warning"
+        android:id="@+id/labelWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Êtes-vous sûr ?"
+        android:text="@string/confirmation_text"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slname"
+        android:layout_below="@+id/labelWarning"
         android:layout_marginTop="30dp"
         >
 
@@ -27,19 +27,18 @@
             android:layout_weight="0.5"
             android:background="@color/colorAccent"
             android:layout_margin="5dp"
-            android:textColor="#FFFFFF"
-            android:text="Supprimer"
+            android:textColor="@color/textColorClear"
+            android:text="@string/delete"
             />
 
         <Button
             android:id="@+id/cancelDelete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
             android:layout_weight="0.5"
-            android:text="Annuler"
-            android:background="#BBB"
-            android:textColor="#FFF"
+            android:text="@string/cancel"
+            android:background="@color/colorClear"
+            android:textColor="@color/textColorClear"
             android:layout_margin="5dp"
             />
     </LinearLayout>

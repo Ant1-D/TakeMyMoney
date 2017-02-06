@@ -28,12 +28,12 @@ import java.util.Objects;
 
 public class ShoppingListDetailActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver, ProductTransferInterface {
 
-    String url, token, shoppingListId, shoppingListName;
-    RequestAPIResultReceiver mReceiver;
-    Activity act = this;
-    Button addProduct;
-    TextView shoppingListNameTextView;
-    String requestType;
+    private String url, token, shoppingListId, shoppingListName;
+    private RequestAPIResultReceiver mReceiver;
+    private Activity act = this;
+    private Button addProduct;
+    private TextView shoppingListNameTextView;
+    private String requestType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
 
     }
 
-    public JSONObject getUserInfos(){
+    JSONObject getUserInfos(){
         try {
             FileInputStream fis = getApplicationContext().openFileInput("user_infos");
 
@@ -84,15 +84,13 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
             }
             return (JSONObject) new JSONTokener(sb.toString()).nextValue();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void requestApi(String requestUrl){
+    void requestApi(String requestUrl){
         mReceiver = new RequestAPIResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, RequestAPIService.class);
@@ -121,6 +119,7 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
                             if (Objects.equals(requestType, "list")){
                                 ArrayList<Product> list = new ArrayList<>();
                                 double totalPrice = 0;
+                                TextView total = (TextView) findViewById(R.id.totalPrice);
 
                                 if(jObject.getJSONArray("result") != null && jObject.getJSONArray("result").length() > 0){
                                     JSONArray resultArray = jObject.getJSONArray("result");
@@ -137,9 +136,10 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
 
                                     //handle listview and assign adapter
                                     ListView lView = (ListView)findViewById(R.id.productLists);
-                                    TextView total = (TextView) findViewById(R.id.totalPrice);
                                     lView.setAdapter(adapter);
                                     total.setText("Total : " + totalPrice + " €");
+                                }else{
+                                    total.setText("");
                                 }
 
                             }else if (Objects.equals(requestType, "add")){
@@ -165,7 +165,7 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
         }
     }
 
-    public void getProductList(){
+    void getProductList(){
         url = "http://appspaces.fr/esgi/shopping_list/product/list.php?token="+token+"&shopping_list_id="+shoppingListId;
         requestType = "list";
 

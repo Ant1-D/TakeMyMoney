@@ -10,7 +10,8 @@
         android:id="@+id/labelProductName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nom du produit :"
+        android:text="@string/product_name"
+        android:labelFor="@+id/productName"
         />
 
     <EditText
@@ -26,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/productName"
-        android:text="Quantité du produit :"
+        android:text="@string/product_quantity"
+        android:labelFor="@+id/productQuantity"
         />
 
     <EditText
@@ -42,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/productQuantity"
-        android:text="Prix du produit :"
+        android:text="@string/product_price"
+        android:labelFor="@+id/productPrice"
         />
 
     <EditText
@@ -57,10 +60,10 @@
         android:id="@+id/createProductButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
+        android:text="@string/add"
         android:layout_below="@+id/productPrice"
         android:background="@color/colorAccent"
-        android:textColor="#FFF"
+        android:textColor="@color/textColorClear"
         />
 
 </RelativeLayout>

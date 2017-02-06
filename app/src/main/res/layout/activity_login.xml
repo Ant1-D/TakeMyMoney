@@ -13,37 +13,56 @@
         android:id="@+id/activityTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Connexion"
-        android:textSize="30dp"
+        android:text="@string/connection"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/textColorDark"
         android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/labelEmail"
+        android:layout_below="@+id/activityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:layout_marginTop="30dp"
+        android:labelFor="@+id/login"
         />
 
     <EditText
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/activityTitle"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/labelEmail"
         android:inputType="text"
+        />
+
+    <TextView
+        android:id="@+id/labelPassword"
+        android:layout_below="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:layout_marginTop="30dp"
+        android:labelFor="@+id/password"
         />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login"
+        android:layout_below="@+id/labelPassword"
         android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Se connecter"
+        android:text="@string/connecting"
         android:layout_below="@+id/password"
-        android:background="@color/colorPrimary"
-        android:textColor="#FFF"
+        android:background="@color/colorAccent"
+        android:textColor="@color/textColorClear"
         android:layout_marginTop="30dp"
         />
 
