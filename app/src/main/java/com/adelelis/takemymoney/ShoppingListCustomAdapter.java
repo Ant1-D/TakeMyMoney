@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -20,13 +19,14 @@ public class ShoppingListCustomAdapter extends BaseAdapter implements ListAdapte
     private ArrayList<ShoppingList> list = new ArrayList<>();
     private Context context;
     private int pos;
-    DataTransferInterface dtInterface;
+    ShoppingListTransferInterface sLInterface;
 
 
 
-    public ShoppingListCustomAdapter(ArrayList<ShoppingList> list, Context context) {
+    public ShoppingListCustomAdapter(ArrayList<ShoppingList> list, Context context, ShoppingListTransferInterface sLInterface) {
         this.list = list;
         this.context = context;
+        this.sLInterface = sLInterface;
     }
 
     @Override

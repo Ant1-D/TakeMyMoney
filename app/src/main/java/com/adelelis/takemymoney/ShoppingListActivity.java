@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class ShoppingListActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
+public class ShoppingListActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver, ShoppingListTransferInterface {
 
     String url, token;
     RequestAPIResultReceiver mReceiver;
@@ -43,10 +43,8 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
         try {
             JSONObject userInfos = getUserInfos();
             token = userInfos.getString("token");
-            url = "http://appspaces.fr/esgi/shopping_list/shopping_list/list.php?token="+token;
-            requestType = "list";
 
-            requestApi(url);
+            getShoppingListList();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -131,7 +129,7 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
                                 }
 
                                 //instantiate custom adapter
-                                ShoppingListCustomAdapter adapter = new ShoppingListCustomAdapter(list, this);
+                                ShoppingListCustomAdapter adapter = new ShoppingListCustomAdapter(list, this, this);
 
                                 //handle listview and assign adapter
                                 ListView lView = (ListView)findViewById(R.id.shoppingsLists);
@@ -144,6 +142,8 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
                                 sendIntent.putExtra("nameSL", resultArray.getString("name"));
 
                                 startActivity(sendIntent);
+                            }else if(Objects.equals(requestType, "remove")){
+                                getShoppingListList();
                             }
 
                             break;
@@ -159,6 +159,13 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
 
             break;
         }
+    }
+
+    public void getShoppingListList(){
+        url = "http://appspaces.fr/esgi/shopping_list/shopping_list/list.php?token="+token;
+        requestType = "list";
+
+        requestApi(url);
     }
 
     private void addShoppingListDialog()
@@ -188,4 +195,20 @@ public class ShoppingListActivity extends AppCompatActivity implements RequestAP
 
     }
 
+    @Override
+    public void setValues(ShoppingList sL, String action) {
+        switch (action){
+            case "remove":
+                url = "http://appspaces.fr/esgi/shopping_list/shopping_list/remove.php?token="+token+"&id="+sL.getId();
+                requestType = "remove";
+
+                requestApi(url);
+                break;
+
+            case "edit":
+
+
+                break;
+        }
+    }
 }

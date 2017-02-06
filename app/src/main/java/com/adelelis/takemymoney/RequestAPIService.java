@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 import static android.content.ContentValues.TAG;
@@ -47,6 +48,8 @@ public class RequestAPIService extends IntentService {
 
             // Create the Request API URL
             url = new URL(requestUrl);
+            URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+            url = uri.toURL();
 
             // New Url requestApi with the GET method
             urlConnection = (HttpURLConnection) url.openConnection();

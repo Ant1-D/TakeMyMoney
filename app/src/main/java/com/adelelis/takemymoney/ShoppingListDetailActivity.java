@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -27,7 +26,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ShoppingListDetailActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver {
+public class ShoppingListDetailActivity extends AppCompatActivity implements RequestAPIResultReceiver.Receiver, ProductTransferInterface {
 
     String url, token, shoppingListId, shoppingListName;
     RequestAPIResultReceiver mReceiver;
@@ -121,6 +120,7 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
                         case 0:
                             if (Objects.equals(requestType, "list")){
                                 ArrayList<Product> list = new ArrayList<>();
+                                double totalPrice = 0;
 
                                 if(jObject.getJSONArray("result") != null && jObject.getJSONArray("result").length() > 0){
                                     JSONArray resultArray = jObject.getJSONArray("result");
@@ -128,21 +128,25 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
                                     for (int i = 0; i < resultArray.length() ; i++){
                                         JSONObject product = resultArray.getJSONObject(i);
                                         Product p = new Product(product.getString("id"), product.getString("name"), product.getDouble("price"), product.getInt("quantity"));
+                                        totalPrice += product.getDouble("price") * product.getDouble("quantity");
                                         list.add(p);
                                     }
 
-                                }else{
-                                    Product p = new Product("1", "Produit 1", 10.27, 2);
-                                    list.add(p);
+                                    //instantiate custom adapter
+                                    ProductCustomAdapter adapter = new ProductCustomAdapter(list, this, this);
+
+                                    //handle listview and assign adapter
+                                    ListView lView = (ListView)findViewById(R.id.productLists);
+                                    TextView total = (TextView) findViewById(R.id.totalPrice);
+                                    lView.setAdapter(adapter);
+                                    total.setText("Total : " + totalPrice + " €");
                                 }
 
-                                //instantiate custom adapter
-                                ProductCustomAdapter adapter = new ProductCustomAdapter(list, this);
-
-                                //handle listview and assign adapter
-                                ListView lView = (ListView)findViewById(R.id.productLists);
-                                lView.setAdapter(adapter);
                             }else if (Objects.equals(requestType, "add")){
+                                getProductList();
+                            }else if (Objects.equals(requestType, "remove")){
+                                getProductList();
+                            }else if (Objects.equals(requestType, "edit")){
                                 getProductList();
                             }
 
@@ -192,7 +196,7 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
             {
                 requestType = "add";
                 url = "http://appspaces.fr/esgi/shopping_list/product/create.php" +
-                        "?token="+token.toString()+
+                        "?token="+token+
                         "&shopping_list_id="+shoppingListId+
                         "&name="+productName.getText().toString()+
                         "&quantity="+productQuantity.getText().toString()+
@@ -201,6 +205,33 @@ public class ShoppingListDetailActivity extends AppCompatActivity implements Req
                 myDialog.cancel();
             }
         });
+
+    }
+
+    @Override
+    public void setValues(Product p, String action) {
+        switch (action){
+            case "remove":
+                url = "http://appspaces.fr/esgi/shopping_list/product/remove.php?token="+token+"&id="+p.getId();
+                requestType = "remove";
+
+                requestApi(url);
+                break;
+
+            case "edit":
+                url = "http://appspaces.fr/esgi/shopping_list/product/edit.php" +
+                        "?token="+token+
+                        "&id="+p.getId()+
+                        "&name="+p.getName()+
+                        "&quantity="+p.getQuantity()+
+                        "&price="+p.getPrice();
+                requestType = "edit";
+
+                requestApi(url);
+
+                break;
+        }
+
 
     }
 }
